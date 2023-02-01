@@ -78,7 +78,7 @@ add_executable(Mono_Inertial src/ros_mono_inertial.cc)
 target_link_libraries(Mono_Inertial ${LIBS})
 
 # Node for stereo-inertial camera
-rosbuild_add_executable(Stereo_Inertial src/ros_stereo_inertial.cc)
+add_executable(Stereo_Inertial src/ros_stereo_inertial.cc)
 target_link_libraries(Stereo_Inertial ${LIBS})
 
 include_directories()
