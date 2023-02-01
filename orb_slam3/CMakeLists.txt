@@ -63,7 +63,7 @@ catkin_package()
 
 # Node for monocular camera
 add_executable(Mono src/ros_mono.cc)
-target_link_libraries(Mono${LIBS})
+target_link_libraries(Mono ${LIBS})
 
 # Node for stereo camera
 add_executable(Stereo src/ros_stereo.cc)
