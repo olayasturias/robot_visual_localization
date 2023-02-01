@@ -61,6 +61,24 @@ ${ORBSLAM3_SOURCE_DIR}/../../../lib/libORB_SLAM3.so
 
 catkin_package()
 
+# Node for monocular camera
+add_executable(Mono src/ros_mono.cc)
+target_link_libraries(Mono${LIBS})
 
+# Node for stereo camera
+add_executable(Stereo src/ros_stereo.cc)
+target_link_libraries(Stereo ${LIBS})
+
+# Node for RGB-D camera
+rosbuild_add_executable(RGBD src/ros_rgbd.cc)
+target_link_libraries(RGBD ${LIBS})
+
+# Node for monocular camera with IMU
+add_executable(Mono_Inertial src/ros_mono_inertial.cc)
+target_link_libraries(Mono_Inertial ${LIBS})
+
+# Node for stereo-inertial camera
+rosbuild_add_executable(Stereo_Inertial src/ros_stereo_inertial.cc)
+target_link_libraries(Stereo_Inertial ${LIBS})
 
 include_directories()
