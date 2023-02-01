@@ -31,8 +31,8 @@
 
 #include<opencv2/core/core.hpp>
 
-#include"../../../include/System.h"
-#include"../include/ImuTypes.h"
+#include"/home/airlab/dev/SLAM/ORB_SLAM3/include/System.h"
+#include"/home/airlab/dev/SLAM/ORB_SLAM3/include/ImuTypes.h"
 
 using namespace std;
 

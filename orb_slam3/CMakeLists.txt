@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.0.2)
 project(orb_slam3)
-set(ENV{ORBSLAM3_SOURCE_DIR} [$ENV{HOME}/dev/SLAM/ORB_SLAM3])
+set(ENV{ORBSLAM3_SOURCE_DIR} $ENV{HOME}/dev/SLAM/ORB_SLAM3)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -11,6 +11,8 @@ set(ENV{ORBSLAM3_SOURCE_DIR} [$ENV{HOME}/dev/SLAM/ORB_SLAM3])
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  cv_bridge
+  image_transport
 )
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
@@ -32,9 +34,9 @@ else()
    message(FATAL_ERROR "The compiler ${CMAKE_CXX_COMPILER} has no C++14 support. Please use a different C++ compiler.")
 endif()
 
-LIST(APPEND CMAKE_MODULE_PATH ${ORBSLAM3_SOURCE_DIR}/../../../cmake_modules)
+LIST(APPEND CMAKE_MODULE_PATH $ENV{ORBSLAM3_SOURCE_DIR}/cmake_modules)
 
-find_package(OpenCV)
+find_package(OpenCV 4 QUIET )
    if(NOT OpenCV_FOUND)
       message(FATAL_ERROR "OpenCV > 4.4 not found.")
    endif()
@@ -42,88 +44,97 @@ find_package(OpenCV)
 find_package(Eigen3 3.4.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 
-catkin_package()
+catkin_package (
+  CATKIN_DEPENDS roscpp rospy
+  LIBRARIES {PROJECT_NAME} libDBoW2 libg2o
+)
 
 include_directories(
-${ORBSLAM3_SOURCE_DIR}
-${ORBSLAM3_SOURCE_DIR}/include
-${ORBSLAM3_SOURCE_DIR}/include/CameraModels
+$ENV{ORBSLAM3_SOURCE_DIR}
+$ENV{ORBSLAM3_SOURCE_DIR}/include
+$ENV{ORBSLAM3_SOURCE_DIR}/include/CameraModels
+$ENV{ORBSLAM3_SOURCE_DIR}/Thirdparty/Sophus
+${EIGEN3_INCLUDE_DIR}
 ${Pangolin_INCLUDE_DIRS}
 ${catkin_INCLUDE_DIRS}
+/usr/include/opencv4/
 )
+
+add_library(${PROJECT_NAME} SHARED
+$ENV{ORBSLAM3_SOURCE_DIR}/src/System.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Tracking.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/LocalMapping.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/LoopClosing.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/ORBextractor.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/ORBmatcher.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/FrameDrawer.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Converter.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/MapPoint.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/KeyFrame.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Atlas.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Map.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/MapDrawer.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Optimizer.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Frame.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/KeyFrameDatabase.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Sim3Solver.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Viewer.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/ImuTypes.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/G2oTypes.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/CameraModels/Pinhole.cpp
+$ENV{ORBSLAM3_SOURCE_DIR}/src/CameraModels/KannalaBrandt8.cpp
+$ENV{ORBSLAM3_SOURCE_DIR}/src/OptimizableTypes.cpp
+$ENV{ORBSLAM3_SOURCE_DIR}/src/MLPnPsolver.cpp
+$ENV{ORBSLAM3_SOURCE_DIR}/src/GeometricTools.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/TwoViewReconstruction.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Config.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/src/Settings.cc
+$ENV{ORBSLAM3_SOURCE_DIR}/include/System.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Tracking.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/LocalMapping.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/LoopClosing.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/ORBextractor.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/ORBmatcher.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/FrameDrawer.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Converter.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/MapPoint.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/KeyFrame.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Atlas.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Map.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/MapDrawer.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Optimizer.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Frame.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/KeyFrameDatabase.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Sim3Solver.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Viewer.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/ImuTypes.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/G2oTypes.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/CameraModels/GeometricCamera.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/CameraModels/Pinhole.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/CameraModels/KannalaBrandt8.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/OptimizableTypes.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/MLPnPsolver.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/GeometricTools.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/TwoViewReconstruction.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/SerializationUtils.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Config.h
+$ENV{ORBSLAM3_SOURCE_DIR}/include/Settings.h)
 
 set(ROS_ORBSLAM_LIBS 
 ${catkin_LIBRARIES}
 ${OpenCV_LIBS} 
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
-${ORBSLAM3_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
-${ORBSLAM3_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
-${ORBSLAM3_SOURCE_DIR}/lib/libORB_SLAM3.so
+$ENV{ORBSLAM3_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+$ENV{ORBSLAM3_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+$ENV{ORBSLAM3_SOURCE_DIR}/lib/libORB_SLAM3.so
 -lboost_system
 )
 
-add_library(${ORBSLAM3_SOURCE_DIR} SHARED
-src/System.cc
-src/Tracking.cc
-src/LocalMapping.cc
-src/LoopClosing.cc
-src/ORBextractor.cc
-src/ORBmatcher.cc
-src/FrameDrawer.cc
-src/Converter.cc
-src/MapPoint.cc
-src/KeyFrame.cc
-src/Atlas.cc
-src/Map.cc
-src/MapDrawer.cc
-src/Optimizer.cc
-src/Frame.cc
-src/KeyFrameDatabase.cc
-src/Sim3Solver.cc
-src/Viewer.cc
-src/ImuTypes.cc
-src/G2oTypes.cc
-src/CameraModels/Pinhole.cpp
-src/CameraModels/KannalaBrandt8.cpp
-src/OptimizableTypes.cpp
-src/MLPnPsolver.cpp
-src/GeometricTools.cc
-src/TwoViewReconstruction.cc
-src/Config.cc
-src/Settings.cc
-include/System.h
-include/Tracking.h
-include/LocalMapping.h
-include/LoopClosing.h
-include/ORBextractor.h
-include/ORBmatcher.h
-include/FrameDrawer.h
-include/Converter.h
-include/MapPoint.h
-include/KeyFrame.h
-include/Atlas.h
-include/Map.h
-include/MapDrawer.h
-include/Optimizer.h
-include/Frame.h
-include/KeyFrameDatabase.h
-include/Sim3Solver.h
-include/Viewer.h
-include/ImuTypes.h
-include/G2oTypes.h
-include/CameraModels/GeometricCamera.h
-include/CameraModels/Pinhole.h
-include/CameraModels/KannalaBrandt8.h
-include/OptimizableTypes.h
-include/MLPnPsolver.h
-include/GeometricTools.h
-include/TwoViewReconstruction.h
-include/SerializationUtils.h
-include/Config.h
-include/Settings.h)
-
-add_subdirectory(${ORBSLAM3_SOURCE_DIR}/Thirdparty/g2o)
+# add_subdirectory($ENV{ORBSLAM3_SOURCE_DIR}/Thirdparty/g2o)
+target_link_libraries(${PROJECT_NAME}
+${ROS_ORBSLAM_LIBS}
+)
 
 # Node for monocular camera
 add_executable(Mono src/ros_mono.cc)
