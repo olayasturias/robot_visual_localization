@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>robot_visual_localization</name>
+  <version>0.0.1</version>
+  <description>ROS packages for robot camera-based localization</description>
+
+  <maintainer email="olaya.tunon@gmail.com">olaya alvarez tunon</maintainer>
+  <license>CCO</license>
+  <author email="olaya.tunon@gmail.com">olaya alvarez tunon</author>
+
+
+  <exec_depend>orb_slam3</exec_depend>
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <export>
+    <metapackage/>
+  </export>
+</package>
