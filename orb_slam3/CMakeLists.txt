@@ -8,7 +8,10 @@ set(ENV{ORBSLAM3_SOURCE_DIR} [$ENV{HOME}/dev/SLAM/ORB_SLAM3])
 ## Find catkin macros and libraries
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
-find_package(catkin REQUIRED)
+find_package(catkin REQUIRED COMPONENTS
+  roscpp
+  rospy
+)
 
 set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS}  -Wall  -O3 -march=native ")
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall  -O3 -march=native")
@@ -39,16 +42,18 @@ find_package(OpenCV)
 find_package(Eigen3 3.4.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 
-
+catkin_package()
 include_directories(
 ${ORBSLAM3_SOURCE_DIR}
 ${ORBSLAM3_SOURCE_DIR}/../../../
 ${ORBSLAM3_SOURCE_DIR}/../../../include
 ${ORBSLAM3_SOURCE_DIR}/../../../include/CameraModels
 ${Pangolin_INCLUDE_DIRS}
+${catkin_INCLUDE_DIRS}
 )
 
 set(LIBS 
+${catkin_LIBRARIES}
 ${OpenCV_LIBS} 
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
@@ -59,10 +64,9 @@ ${ORBSLAM3_SOURCE_DIR}/../../../lib/libORB_SLAM3.so
 )
 
 
-catkin_package()
 
-install(DIRECTORY config launch
-  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+
 
 # Node for monocular camera
 add_executable(Mono src/ros_mono.cc)
@@ -84,4 +88,8 @@ target_link_libraries(Mono_Inertial ${LIBS})
 add_executable(Stereo_Inertial src/ros_stereo_inertial.cc)
 target_link_libraries(Stereo_Inertial ${LIBS})
 
-include_directories()
+install(DIRECTORY config launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
+
+# include_directories()
