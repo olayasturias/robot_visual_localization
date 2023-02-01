@@ -45,9 +45,8 @@ find_package(Pangolin REQUIRED)
 catkin_package()
 include_directories(
 ${ORBSLAM3_SOURCE_DIR}
-${ORBSLAM3_SOURCE_DIR}/../../../
-${ORBSLAM3_SOURCE_DIR}/../../../include
-${ORBSLAM3_SOURCE_DIR}/../../../include/CameraModels
+${ORBSLAM3_SOURCE_DIR}/include
+${ORBSLAM3_SOURCE_DIR}/include/CameraModels
 ${Pangolin_INCLUDE_DIRS}
 ${catkin_INCLUDE_DIRS}
 )
@@ -57,9 +56,9 @@ ${catkin_LIBRARIES}
 ${OpenCV_LIBS} 
 ${EIGEN3_LIBS}
 ${Pangolin_LIBRARIES}
-${ORBSLAM3_SOURCE_DIR}/../../../Thirdparty/DBoW2/lib/libDBoW2.so
-${ORBSLAM3_SOURCE_DIR}/../../../Thirdparty/g2o/lib/libg2o.so
-${ORBSLAM3_SOURCE_DIR}/../../../lib/libORB_SLAM3.so
+${ORBSLAM3_SOURCE_DIR}/Thirdparty/DBoW2/lib/libDBoW2.so
+${ORBSLAM3_SOURCE_DIR}/Thirdparty/g2o/lib/libg2o.so
+${ORBSLAM3_SOURCE_DIR}/lib/libORB_SLAM3.so
 -lboost_system
 )
 
