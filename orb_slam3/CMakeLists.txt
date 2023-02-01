@@ -70,7 +70,7 @@ add_executable(Stereo src/ros_stereo.cc)
 target_link_libraries(Stereo ${LIBS})
 
 # Node for RGB-D camera
-rosbuild_add_executable(RGBD src/ros_rgbd.cc)
+add_executable(RGBD src/ros_rgbd.cc)
 target_link_libraries(RGBD ${LIBS})
 
 # Node for monocular camera with IMU
