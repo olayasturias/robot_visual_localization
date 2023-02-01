@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="cam_topic" default="/airsim_node/RovSimple/front_right_custom/Scene"/>
+    <arg name="orb_slam3_path" default="$(env HOME)/dev/SLAM/ORB_SLAM3"/>
+    <arg name="vocabulary_path" default="$(arg orb_slam3_path)/Vocabulary/ORBvoc.txt"/>
+    <arg name="config_file" default="$(find orb_slam3)/config/Monocular/UWRS.yaml"/>
+
+    <!-- start bluerov2 node -->
+    <node pkg="orb_slam3" type="Mono" name="Mono" respawn="false">
+        <param name="cam_topic" value="$(arg cam_topic)"/>
+        <param name="vocabulary_path" value="$(arg vocabulary_path)"/>
+        <param name="config_file" value="$(arg config_file)"/>
+    </node>
+</launch>

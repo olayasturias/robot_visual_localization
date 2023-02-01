@@ -61,6 +61,9 @@ ${ORBSLAM3_SOURCE_DIR}/../../../lib/libORB_SLAM3.so
 
 catkin_package()
 
+install(DIRECTORY config launch
+  DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+
 # Node for monocular camera
 add_executable(Mono src/ros_mono.cc)
 target_link_libraries(Mono ${LIBS})
