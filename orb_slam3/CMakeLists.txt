@@ -43,6 +43,7 @@ find_package(Eigen3 3.4.0 REQUIRED)
 find_package(Pangolin REQUIRED)
 
 catkin_package()
+
 include_directories(
 ${ORBSLAM3_SOURCE_DIR}
 ${ORBSLAM3_SOURCE_DIR}/include
@@ -51,7 +52,7 @@ ${Pangolin_INCLUDE_DIRS}
 ${catkin_INCLUDE_DIRS}
 )
 
-set(LIBS 
+set(ROS_ORBSLAM_LIBS 
 ${catkin_LIBRARIES}
 ${OpenCV_LIBS} 
 ${EIGEN3_LIBS}
@@ -62,30 +63,87 @@ ${ORBSLAM3_SOURCE_DIR}/lib/libORB_SLAM3.so
 -lboost_system
 )
 
+add_library(${ORBSLAM3_SOURCE_DIR} SHARED
+src/System.cc
+src/Tracking.cc
+src/LocalMapping.cc
+src/LoopClosing.cc
+src/ORBextractor.cc
+src/ORBmatcher.cc
+src/FrameDrawer.cc
+src/Converter.cc
+src/MapPoint.cc
+src/KeyFrame.cc
+src/Atlas.cc
+src/Map.cc
+src/MapDrawer.cc
+src/Optimizer.cc
+src/Frame.cc
+src/KeyFrameDatabase.cc
+src/Sim3Solver.cc
+src/Viewer.cc
+src/ImuTypes.cc
+src/G2oTypes.cc
+src/CameraModels/Pinhole.cpp
+src/CameraModels/KannalaBrandt8.cpp
+src/OptimizableTypes.cpp
+src/MLPnPsolver.cpp
+src/GeometricTools.cc
+src/TwoViewReconstruction.cc
+src/Config.cc
+src/Settings.cc
+include/System.h
+include/Tracking.h
+include/LocalMapping.h
+include/LoopClosing.h
+include/ORBextractor.h
+include/ORBmatcher.h
+include/FrameDrawer.h
+include/Converter.h
+include/MapPoint.h
+include/KeyFrame.h
+include/Atlas.h
+include/Map.h
+include/MapDrawer.h
+include/Optimizer.h
+include/Frame.h
+include/KeyFrameDatabase.h
+include/Sim3Solver.h
+include/Viewer.h
+include/ImuTypes.h
+include/G2oTypes.h
+include/CameraModels/GeometricCamera.h
+include/CameraModels/Pinhole.h
+include/CameraModels/KannalaBrandt8.h
+include/OptimizableTypes.h
+include/MLPnPsolver.h
+include/GeometricTools.h
+include/TwoViewReconstruction.h
+include/SerializationUtils.h
+include/Config.h
+include/Settings.h)
 
-
-
-
+add_subdirectory(${ORBSLAM3_SOURCE_DIR}/Thirdparty/g2o)
 
 # Node for monocular camera
 add_executable(Mono src/ros_mono.cc)
-target_link_libraries(Mono ${LIBS})
+target_link_libraries(Mono ${ROS_ORBSLAM_LIBS})
 
 # Node for stereo camera
 add_executable(Stereo src/ros_stereo.cc)
-target_link_libraries(Stereo ${LIBS})
+target_link_libraries(Stereo ${ROS_ORBSLAM_LIBS})
 
 # Node for RGB-D camera
 add_executable(RGBD src/ros_rgbd.cc)
-target_link_libraries(RGBD ${LIBS})
+target_link_libraries(RGBD ${ROS_ORBSLAM_LIBS})
 
 # Node for monocular camera with IMU
 add_executable(Mono_Inertial src/ros_mono_inertial.cc)
-target_link_libraries(Mono_Inertial ${LIBS})
+target_link_libraries(Mono_Inertial ${ROS_ORBSLAM_LIBS})
 
 # Node for stereo-inertial camera
 add_executable(Stereo_Inertial src/ros_stereo_inertial.cc)
-target_link_libraries(Stereo_Inertial ${LIBS})
+target_link_libraries(Stereo_Inertial ${ROS_ORBSLAM_LIBS})
 
 install(DIRECTORY config launch
   DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
