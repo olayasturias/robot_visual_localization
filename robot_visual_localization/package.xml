@@ -10,6 +10,7 @@
 
 
   <exec_depend>orb_slam3</exec_depend>
+  <exec_depend>orb_slam3_ros_wrapper</exec_depend>
   <buildtool_depend>catkin</buildtool_depend>
 
   <export>
