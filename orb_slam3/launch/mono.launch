@@ -6,9 +6,6 @@
     <arg name="config_file" default="$(find orb_slam3)/config/Monocular/UWRS.yaml"/>
 
     <!-- start bluerov2 node -->
-    <node pkg="orb_slam3" type="Mono" name="Mono" respawn="false">
-        <param name="cam_topic" value="$(arg cam_topic)"/>
-        <param name="vocabulary_path" value="$(arg vocabulary_path)"/>
-        <param name="config_file" value="$(arg config_file)"/>
+    <node pkg="orb_slam3" type="Mono" name="Mono" respawn="false" args="$(arg cam_topic) $(arg vocabulary_path) $(arg config_file)">
     </node>
 </launch>

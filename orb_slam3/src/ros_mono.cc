@@ -45,8 +45,12 @@ int main(int argc, char **argv)
 {
     ros::init(argc, argv, "Mono");
     ros::start();
-
-    if(argc != 3)
+    std::cout << "argv[0]" << argv[0] << std::endl;
+    std::cout << "argv[1]" << argv[1] << std::endl;
+    std::cout << "argv[2]" << argv[2] << std::endl;
+    std::cout << "argv[3]" << argv[3] << std::endl;
+    std::cout << "argc"<< argc << std::endl;
+    if(argc != 4)
     {
         cerr << endl << "Usage: rosrun ORB_SLAM3 Mono camera_topic path_to_vocabulary path_to_settings" << endl;        
         ros::shutdown();
