@@ -2,8 +2,8 @@ import numpy as np
 import cv2
 from torch.utils.data import Dataset, DataLoader
 from os import listdir
-from .transformation import pos_quats2SEs, pose2motion, SEs2ses
-from ..tartan_vo_ros.utils import make_intrinsics_layer
+from tartan_vo_ros.Datasets.transformation import pos_quats2SEs, pose2motion, SEs2ses
+from tartan_vo_ros.Datasets.utils import make_intrinsics_layer
 
 class TrajFolderDataset(Dataset):
     """scene flow synthetic dataset. """

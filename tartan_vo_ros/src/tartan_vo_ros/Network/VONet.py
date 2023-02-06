@@ -33,8 +33,8 @@
 import torch 
 import torch.nn as nn
 import torch.nn.functional as F
-from .PWC import PWCDCNet as FlowNet
-from .VOFlowNet import VOFlowRes as FlowPoseNet
+from tartan_vo_ros.Network.PWC import PWCDCNet as FlowNet
+from tartan_vo_ros.Network.VOFlowNet import VOFlowRes as FlowPoseNet
 
 class VONet(nn.Module):
     def __init__(self):
