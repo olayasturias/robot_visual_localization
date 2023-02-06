@@ -17,10 +17,8 @@ import time
 
 class Compose(object):
     """Composes several transforms together.
-
     Args:
         transforms (List[Transform]): list of transforms to compose.
-
     Example:
         >>> transforms.Compose([
         >>>     transforms.CenterCrop(10),
@@ -40,7 +38,6 @@ class Compose(object):
 class DownscaleFlow(object):
     """
     Scale the flow and mask to a fixed size
-
     """
     def __init__(self, scale=4):
         '''
@@ -49,15 +46,15 @@ class DownscaleFlow(object):
         self.downscale = 1.0/scale
 
     def __call__(self, sample): 
-        if self.downscale!=1 and sample.has_key('flow'):
+        if self.downscale!=1 and 'flow' in sample :
             sample['flow'] = cv2.resize(sample['flow'], 
                 (0, 0), fx=self.downscale, fy=self.downscale, interpolation=cv2.INTER_LINEAR)
 
-        if self.downscale!=1 and sample.has_key('intrinsic'):
+        if self.downscale!=1 and 'intrinsic' in sample :
             sample['intrinsic'] = cv2.resize(sample['intrinsic'], 
                 (0, 0), fx=self.downscale, fy=self.downscale, interpolation=cv2.INTER_LINEAR)
 
-        if self.downscale!=1 and sample.has_key('fmask'):
+        if self.downscale!=1 and 'fmask' in sample :
             sample['fmask'] = cv2.resize(sample['fmask'],
                 (0, 0), fx=self.downscale, fy=self.downscale, interpolation=cv2.INTER_LINEAR)
         return sample
@@ -74,7 +71,7 @@ class CropCenter(object):
             self.size = size
 
     def __call__(self, sample):
-        kks = sample.keys()
+        kks = list(sample.keys())
         th, tw = self.size
         h, w = sample[kks[0]].shape[0], sample[kks[0]].shape[1]
         if w == tw and h == th:
