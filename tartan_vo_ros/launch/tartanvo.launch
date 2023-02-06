@@ -13,7 +13,7 @@
     <arg name="center_y" default="240.0"/>
 
     <!-- start tartanvo node -->
-    <node name="tartanvo_node" pkg="tartan_vo_ros" type="tartanvo_node"  respawn="false" output="screen">
+    <node name="tartanvo_node" pkg="tartan_vo_ros" type="tartanvo_node.py"  respawn="false" output="screen">
             <!-- Parameters for tartanvo model -->
             <param name="tartanvo_model_path" type="string"   value="$(arg tartanvo_model_path)" />
             <!-- camera related params -->
