@@ -36,7 +36,7 @@ import time
 
 np.set_printoptions(precision=4, suppress=True, threshold=10000)
 
-from Network.VONet import VONet
+from tartan_vo_ros.Network.VONet import VONet
 
 class TartanVO(object):
     def __init__(self, model_name):
