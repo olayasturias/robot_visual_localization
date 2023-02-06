@@ -48,13 +48,14 @@ import time
 class TartanVONode(object):
     def __init__(self):
 
-        model_name = rospy.get_param('~model_name', 'tartanvo_1914.pkl')
-        w = rospy.get_param('~image_width', 640)
-        h = rospy.get_param('~image_height', 480)
-        fx = rospy.get_param('~focal_x', 320.0)
-        fy = rospy.get_param('~focal_y', 320.0)
-        ox = rospy.get_param('~center_x', 320.0)
-        oy = rospy.get_param('~center_y', 240.0)
+        cam_topic = rospy.get_param('~cam_topic')
+        model_name = rospy.get_param('~tartanvo_model_path')
+        w = rospy.get_param('~image_width')
+        h = rospy.get_param('~image_height')
+        fx = rospy.get_param('~focal_x')
+        fy = rospy.get_param('~focal_y')
+        ox = rospy.get_param('~center_x')
+        oy = rospy.get_param('~center_y')
         self.cam_intrinsics = [w, h, fx, fy, ox, oy]
 
         self.cv_bridge = CvBridge()
@@ -64,7 +65,7 @@ class TartanVONode(object):
 
         self.pose_pub = rospy.Publisher("tartanvo_pose", PoseStamped, queue_size=10)
         self.odom_pub = rospy.Publisher("tartanvo_odom", Odometry, queue_size=10)
-        rospy.Subscriber('rgb_image', Image, self.handle_img)
+        rospy.Subscriber(cam_topic, Image, self.handle_img)
         rospy.Subscriber('cam_info', CameraInfo, self.handle_caminfo)
         rospy.Subscriber('vo_scale', Float32, self.handle_scale)
 

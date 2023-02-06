@@ -1,0 +1,42 @@
+<launch>
+
+    <arg name="cam_topic" default="/cam0/image_raw"/>
+    <arg name="tartanvo_model_path" default="$(find tartan_vo_ros)/models/1914.pkl"/>
+    <arg name="world_frame_id" default="world"/>
+    <arg name="cam_frame_id" default="camera"/>
+
+    <arg name="image_width" default="640"/>
+    <arg name="image_height" default="480"/>
+    <arg name="focal_x" default="320.0"/>
+    <arg name="focal_y" default="320.0"/>
+    <arg name="center_x" default="320.0"/>
+    <arg name="center_y" default="240.0"/>
+
+    <!-- start orb slam monocular node -->
+    <node name="tartanvo_node" pkg="tartan_vo_ros" type="tartanvo_node"  respawn="false" output="screen">
+            <!-- Parameters for tartanvo model -->
+            <param name="tartanvo_model_path" type="string"   value="$(arg tartanvo_model_path)" />
+            <!-- camera related params -->
+            <param name="cam_topic"    type="string"   value="$(arg cam_topic)" />
+            <param name="focal_x"      type="string"   value="$(arg focal_x)" />
+            <param name="focal_y"      type="string"   value="$(arg focal_y)" />
+            <param name="center_x"     type="string"   value="$(arg center_x)" />
+            <param name="center_y"     type="string"   value="$(arg center_y)" />
+            <param name="image_width"  type="string"   value="$(arg image_width)" />
+            <param name="image_height" type="string"   value="$(arg image_height)" />
+            <!-- Parameters for ROS -->
+            <param name="world_frame_id"    type="string"   value="$(arg world_frame_id)" />
+            <param name="cam_frame_id"      type="string"   value="$(arg cam_frame_id)" />
+    </node>
+
+    <!-- Visualization - RViz-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find orb_slam3_ros_wrapper)/config/orb_slam3_no_imu.rviz" output="screen" />
+
+    <node pkg="hector_trajectory_server" type="hector_trajectory_server" name="trajectory_server_orb_slam3" output="screen" ns="orb_slam3_ros" >
+        <param name="/target_frame_name" value="$(arg world_frame_id)" />
+        <param name="/source_frame_name" value="$(arg cam_frame_id)" />
+        <param name="/trajectory_update_rate" value="20.0" />
+        <param name="/trajectory_publish_rate" value="20.0" />
+    </node>
+
+</launch>

@@ -45,8 +45,7 @@ class TartanVO(object):
 
         # load the whole model
         if model_name.endswith('.pkl'):
-            modelname = 'models/' + model_name
-            self.load_model(self.vonet, modelname)
+            self.load_model(self.vonet, model_name)
 
         self.vonet.cuda()
 
