@@ -18,10 +18,10 @@
             <param name="tartanvo_model_path" type="string"   value="$(arg tartanvo_model_path)" />
             <!-- camera related params -->
             <param name="cam_topic"    type="string"   value="$(arg cam_topic)" />
-            <param name="focal_x"      type="float"   value="$(arg focal_x)" />
-            <param name="focal_y"      type="float"   value="$(arg focal_y)" />
-            <param name="center_x"     type="float"   value="$(arg center_x)" />
-            <param name="center_y"     type="float"   value="$(arg center_y)" />
+            <param name="focal_x"      type="double"   value="$(arg focal_x)" />
+            <param name="focal_y"      type="double"   value="$(arg focal_y)" />
+            <param name="center_x"     type="double"   value="$(arg center_x)" />
+            <param name="center_y"     type="double"   value="$(arg center_y)" />
             <param name="image_width"  type="int"   value="$(arg image_width)" />
             <param name="image_height" type="int"   value="$(arg image_height)" />
             <!-- Parameters for ROS -->
