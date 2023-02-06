@@ -55,17 +55,6 @@ include_directories(
 
 catkin_install_python(PROGRAMS
   scripts/tartanvo_node.py
-  scripts/TartanVO.py
-#   scripts/Datasets/__init__.py 
-#   scripts/Datasets/tartanTrajFlowDataset.py
-#   scripts/Datasets/transformation.py
-#   scripts/Datasets/utils.py
-#   scripts/Network/__init__.py 
-#   scripts/Network/VOFlowNet.py
-#   scripts/Network/VONet.py
-#   scripts/Network/PWC/__init__.py
-#   scripts/Network/PWC/correlation.py
-#   scripts/Network/PWC/PWCNet.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 

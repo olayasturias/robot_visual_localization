@@ -42,7 +42,7 @@ from std_msgs.msg import Float32
 from cv_bridge import CvBridge
 from tartan_vo_ros.Datasets.utils import ToTensor, Compose, CropCenter, DownscaleFlow, make_intrinsics_layer
 from tartan_vo_ros.Datasets.transformation import se2SE, SO2quat
-from TartanVO import TartanVO
+from tartan_vo_ros.TartanVO import TartanVO
 import time
 
 class TartanVONode(object):
