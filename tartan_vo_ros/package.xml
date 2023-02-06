@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <package format="2">
   <name>tartan_vo_ros</name>
-  <version>0.0.0</version>
+  <version>0.0.1</version>
   <description>The tartan_vo_ros package</description>
   <maintainer email="olaya.tunon@gmail.com">olaya alvarez tunon</maintainer>
   <license>CCO</license>
