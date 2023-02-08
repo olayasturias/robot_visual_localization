@@ -1,3 +1,6 @@
 [submodule "orb_slam3_ros_wrapper"]
 	path = orb_slam3_ros_wrapper
 	url = https://github.com/olayasturias/orb_slam3_ros_wrapper
+[submodule "dso_ros"]
+	path = dso_ros
+	url = git@github.com:olayasturias/dso_ros.git
