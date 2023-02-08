@@ -12,7 +12,7 @@ def gt_callback(data):
 def listener():
 
     rospy.init_node('gt_listener', anonymous=True)
-    gt_topic = rospy.get_param('~gt_topic')
+    gt_topic = rospy.get_param('~pose_topic')
     rospy.Subscriber(gt_topic, PoseStamped, gt_callback)
 
     rospy.on_shutdown(save_groundtruth)
