@@ -5,6 +5,13 @@
     <arg name="world_frame_id" default="world"/>
     <arg name="cam_frame_id" default="camera"/>
 
+    <arg name="image_width" default="1280"/>
+    <arg name="image_height" default="720"/>
+    <arg name="focal_x" default="640.0"/>
+    <arg name="focal_y" default="640.0"/>
+    <arg name="center_x" default="640.0"/>
+    <arg name="center_y" default="360.0"/>
+
     <include file="$(find tartan_vo_ros)/launch/tartanvo.launch" pass_all_args="true"/>
 
 
