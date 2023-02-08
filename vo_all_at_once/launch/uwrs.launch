@@ -20,7 +20,7 @@
 
     <!-- Visualization - RViz-->
     <node name="rviz" pkg="rviz" type="rviz" args="-d $(find vo_all_at_once)/config/uwrs.rviz" output="screen" />
-    
-    <node pkg="tf" type="static_transform_publisher" name="worlds_broadcaster" args="0 0 0 0 0 0 0 world_ned world_vo 100" />
+
+    <node pkg="tf" type="static_transform_publisher" name="worlds_broadcaster" args="0 0 0 0 0 0 1 world_ned world_vo 100" />
 
 </launch>
