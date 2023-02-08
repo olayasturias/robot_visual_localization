@@ -63,8 +63,8 @@ class TartanVONode(object):
         self.intrinsic = make_intrinsics_layer(w, h, fx, fy, ox, oy)
         self.tartanvo = TartanVO(model_name)
 
-        self.pose_pub = rospy.Publisher("tartanvo_pose", PoseStamped, queue_size=10)
-        self.odom_pub = rospy.Publisher("tartanvo_odom", Odometry, queue_size=10)
+        self.pose_pub = rospy.Publisher("tartanvo/camera_pose", PoseStamped, queue_size=10)
+        self.odom_pub = rospy.Publisher("tartanvo/camera_odom", Odometry, queue_size=10)
         rospy.Subscriber(cam_topic, Image, self.handle_img)
         rospy.Subscriber('cam_info', CameraInfo, self.handle_caminfo)
         rospy.Subscriber('vo_scale', Float32, self.handle_scale)
