@@ -7,15 +7,17 @@ def save_groundtruth():
 
 
 def gt_callback(data):
-    rospy.loginfo(rospy.get_caller_id() + "I heard %s", data.data)
+    rospy.loginfo(rospy.get_caller_id() + "Tartan cam pose %s", data.pose)
     
 def listener():
 
     rospy.init_node('gt_listener', anonymous=True)
-    gt_topic = rospy.get_param('~pose_topic')
-    rospy.Subscriber(gt_topic, PoseStamped, gt_callback)
-
     rospy.on_shutdown(save_groundtruth)
+
+    gt_topic = rospy.get_param('~pose_topic')
+
+    rospy.Subscriber(gt_topic, PoseStamped, gt_callback)
+    
     rospy.spin()
 
 if __name__ == '__main__':
