@@ -11,6 +11,7 @@
   <exec_depend>dso_ros</exec_depend>
   <exec_depend>tartan_vo_ros</exec_depend>
   <exec_depend>orb_slam3_ros_wrapper</exec_depend>
+  <exec_depend>vo_all_at_once</exec_depend>
   <buildtool_depend>catkin</buildtool_depend>
 
   <export>

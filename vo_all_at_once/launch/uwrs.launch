@@ -1,0 +1,26 @@
+<launch>
+
+    <arg name="cam_topic" default="/airsim_node/RovSimple/front_right_custom/Scene"/>
+    <arg name="orb_slam3_path" default="$(env HOME)/dev/SLAM/ORB_SLAM3"/>
+    <arg name="vocabulary_path" default="$(arg orb_slam3_path)/Vocabulary/ORBvoc.txt"/>
+    <arg name="config_file" default="$(find orb_slam3_ros_wrapper)/config/UWRS.yaml"/>
+    <arg name="world_frame_id" default="world_vo"/>
+
+    <include file="$(find orb_slam3_ros_wrapper)/launch/mono.launch" pass_all_args="true"/>
+
+    <arg name="tartanvo_model_path" default="$(find tartan_vo_ros)/models/1914.pkl"/>
+    <arg name="image_width" default="1280"/>
+    <arg name="image_height" default="720"/>
+    <arg name="focal_x" default="640.0"/>
+    <arg name="focal_y" default="640.0"/>
+    <arg name="center_x" default="640.0"/>
+    <arg name="center_y" default="360.0"/>
+
+    <include file="$(find tartan_vo_ros)/launch/tartanvo.launch" pass_all_args="true"/>
+
+    <!-- Visualization - RViz-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find vo_all_at_once)/config/uwrs.rviz" output="screen" />
+    
+    <node pkg="tf" type="static_transform_publisher" name="worlds_broadcaster" args="0 0 0 0 0 0 0 world_ned world_vo 100" />
+
+</launch>
