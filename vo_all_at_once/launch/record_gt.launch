@@ -1,10 +1,11 @@
 <launch>
 
     <arg name="pose_topic" default="/airsim_node/RovSimple/odom_local_ned"/>
+    <arg name="msg_type" default="Odometry"/>
 
-    <!-- start orb slam monocular node -->
     <node name="read_save_pose_tartan" pkg="vo_all_at_once" type="read_save_pose.py"  respawn="false" output="screen">
             <param name="pose_topic"      type="string"   value="$(arg pose_topic)" />
+            <param name="msg_type"      type="string"   value="$(arg msg_type)" />
     </node>
 
 
