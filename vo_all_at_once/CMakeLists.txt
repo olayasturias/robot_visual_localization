@@ -9,7 +9,6 @@ project(vo_all_at_once)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
   dso_ros
-  orb_slam3_ros_wrapper
   roscpp
   rospy
   tartan_vo_ros
@@ -49,4 +48,6 @@ catkin_install_python(PROGRAMS
   # scripts/all_worlds_in_one.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
+install(DIRECTORY config launch
+    DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
 
