@@ -14,5 +14,7 @@
 
     <include file="$(find tartan_vo_ros)/launch/tartanvo.launch" pass_all_args="true"/>
 
+    <!-- Visualization - RViz-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tartan_vo_ros)/config/uwrs.rviz" output="screen" />
 
 </launch>
