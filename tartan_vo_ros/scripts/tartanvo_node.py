@@ -47,7 +47,8 @@ import time
 
 class TartanVONode(object):
     def __init__(self):
-
+        self.world_frame_id = rospy.get_param('~world_frame_id')
+        self.cam_frame_id = rospy.get_param('~cam_frame_id')
         cam_topic = rospy.get_param('~cam_topic')
         model_name = rospy.get_param('~tartanvo_model_path')
         w = rospy.get_param('~image_width')
@@ -101,7 +102,7 @@ class TartanVONode(object):
         if self.last_img is not None:
             pose_msg = PoseStamped()
             pose_msg.header.stamp = msg.header.stamp
-            pose_msg.header.frame_id = 'map'
+            pose_msg.header.frame_id = self.world_frame_id
             sample = {'img1': self.last_img, 
                       'img2': image_np, 
                       'intrinsic': self.intrinsic
