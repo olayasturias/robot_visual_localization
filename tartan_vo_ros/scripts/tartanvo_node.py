@@ -33,10 +33,10 @@
 # POSSIBILITY OF SUCH DAMAGE.
 import cv2
 import numpy as np
-
+import tf2_ros
 import rospy
 from sensor_msgs.msg import Image, CameraInfo
-from geometry_msgs.msg import PoseStamped
+from geometry_msgs.msg import PoseStamped, TransformStamped
 from nav_msgs.msg import Odometry
 from std_msgs.msg import Float32
 from cv_bridge import CvBridge
@@ -64,6 +64,7 @@ class TartanVONode(object):
         self.intrinsic = make_intrinsics_layer(w, h, fx, fy, ox, oy)
         self.tartanvo = TartanVO(model_name)
 
+        self.tf2_broadcaster = tf2_ros.TransformBroadcaster()
         self.pose_pub = rospy.Publisher("tartanvo/camera_pose", PoseStamped, queue_size=10)
         self.odom_pub = rospy.Publisher("tartanvo/camera_odom", Odometry, queue_size=10)
         rospy.Subscriber(cam_topic, Image, self.handle_img)
@@ -140,6 +141,19 @@ class TartanVONode(object):
             odom_msg.pose.pose = pose_msg.pose
 
             self.odom_pub.publish(odom_msg)      
+
+            tf_msg = TransformStamped()
+            tf_msg.header.stamp = rospy.Time.now()
+            tf_msg.header.frame_id = self.world_frame_id # parent
+            tf_msg.child_frame_id = self.cam_frame_id # child
+            tf_msg.transform.translation.x = self.pose[0,3]
+            tf_msg.transform.translation.y = self.pose[1,3]
+            tf_msg.transform.translation.z = self.pose[2,3]
+            tf_msg.transform.rotation.x = quat[0]
+            tf_msg.transform.rotation.y = quat[1]
+            tf_msg.transform.rotation.z = quat[2]
+            tf_msg.transform.rotation.w = quat[3]
+            self.tf2_broadcaster.sendTransform(tf_msg)
 
         self.last_img = image_np.copy()
         print("    call back time: {}:".format(time.time()-starttime))
