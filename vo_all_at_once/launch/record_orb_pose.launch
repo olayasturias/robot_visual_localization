@@ -1,0 +1,12 @@
+
+<launch>
+
+    <arg name="pose_topic" default="/orb_slam3/camera_pose"/>
+
+    <!-- start orb slam monocular node -->
+    <node name="read_save_pose_orb" pkg="vo_all_at_once" type="read_save_pose.py"  respawn="false" output="screen">
+            <param name="pose_topic"      type="string"   value="$(arg pose_topic)" />
+    </node>
+
+
+</launch>
