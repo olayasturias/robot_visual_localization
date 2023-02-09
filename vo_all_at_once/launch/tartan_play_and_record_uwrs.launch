@@ -1,0 +1,18 @@
+<launch>
+
+    <arg name="cam_topic" default="/airsim_node/RovSimple/front_right_custom/Scene"/>
+    <arg name="world_frame_id" default="world_vo"/>
+    <arg name="tartanvo_model_path" default="$(find tartan_vo_ros)/models/1914.pkl"/>
+    <arg name="image_width" default="1280"/>
+    <arg name="image_height" default="720"/>
+    <arg name="focal_x" default="640.0"/>
+    <arg name="focal_y" default="640.0"/>
+    <arg name="center_x" default="640.0"/>
+    <arg name="center_y" default="360.0"/>
+
+    <include file="$(find tartan_vo_ros)/launch/tartanvo.launch" pass_all_args="true"/>
+
+    <include file="$(find vo_all_at_once)/launch/record_all_algs.launch"/>
+
+
+</launch>
