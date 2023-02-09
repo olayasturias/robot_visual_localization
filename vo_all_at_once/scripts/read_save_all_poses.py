@@ -1,10 +1,11 @@
 import rospy
 import pandas as pd
 import os
+import matplotlib.pyplot as plt
 from datetime import datetime
 from geometry_msgs.msg import PoseStamped, TransformStamped
 from nav_msgs.msg import Odometry
-from evo.tools import file_interface
+from evo.tools import file_interface, plot
 from evo.core import metrics, sync
 from evo.core.metrics import PoseRelation
 
@@ -89,13 +90,29 @@ class Pose_msg_to_file():
         evo_orb    = file_interface.read_tum_trajectory_file(orb)
         evo_tartan = file_interface.read_tum_trajectory_file(tartan)
 
-        result_dict.update(self.create_evo_dict('orb_slam3', evo_gt, evo_orb))
-        result_dict.update(self.create_evo_dict('tartan', evo_gt, evo_tartan))
+        r_dict, orb_aligned = self.create_evo_dict('orb_slam3', evo_gt, evo_orb)
+        result_dict.update(r_dict)
+        r_dict, tartan_aligned = self.create_evo_dict('tartan', evo_gt, evo_tartan)
+        result_dict.update(r_dict)
 
         print(result_dict)
-        with open(outfile,'w+') as data: 
+        with open(outfile + '.txt','w+') as data: 
             data.write(str(result_dict))
 
+        trajectory_dict = {
+            "orb_slam3": orb_aligned,
+            "reference": evo_gt,
+            "tartan": tartan_aligned
+        }
+
+        self.create_evo_plot(trajectory_dict, outfile+'.svg')
+
+        
+
+    def create_evo_plot(self,trajectory_dict,file):
+        fig = plt.figure()
+        plot.trajectories(fig, trajectory_dict, plot.PlotMode.xyz)
+        plt.savefig(file)
 
     def create_evo_dict(self, algorithm_name, gt, estimate):
         result_dict = {}
@@ -127,7 +144,7 @@ class Pose_msg_to_file():
         rpe_stats = rpe_metric.get_all_statistics()
         result_dict.update({(algorithm_name,'rpe','rotation'):rpe_stats})
 
-        return result_dict
+        return result_dict, estimate
 
    
     def save_groundtruth(self):
@@ -150,7 +167,7 @@ class Pose_msg_to_file():
                                             self.orb_qx, self.orb_qy, self.orb_qz, self.orb_qw)
             self.save_pose_tum(tartan_filepath, self.tartan_ts, self.tartan_tx, self.tartan_ty, self.tartan_tz,
                                             self.tartan_qx, self.tartan_qy, self.tartan_qz, self.tartan_qw)
-            self.evo_evaluate(gt_filepath, orb_filepath, tartan_filepath, os.path.join(abspath, "evaluation.txt"))
+            self.evo_evaluate(gt_filepath, orb_filepath, tartan_filepath, os.path.join(abspath, "evaluation"))
         else:
             print("format other than TUM not implemented yet")
 
