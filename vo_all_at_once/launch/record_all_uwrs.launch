@@ -1,0 +1,30 @@
+<launch>
+
+    <arg name="gt_pose_topic" default="/airsim_node/RovSimple/odom_local_ned"/>
+    <arg name="gt_msg_type"   default="Odometry"/>
+
+    <arg name="orb_pose_topic" default="/orb_slam3/camera_pose"/>
+    <arg name="orb_msg_type"   default="PoseStamped"/>
+
+    <arg name="tartan_pose_topic" default="/tartanvo/camera_pose"/>
+    <arg name="tartan_msg_type"   default="PoseStamped"/>
+
+    <arg name="db_format" default="tum-rgbd"/>
+    <arg name="file_dir"  default="$(find vo_all_at_once)/saved"/>
+
+    <node name="read_save_pose_tartan" pkg="vo_all_at_once" type="read_save_all_poses.py"  respawn="false" output="screen">
+            <param name="gt_pose_topic"     type="string"   value="$(arg gt_pose_topic)" />
+            <param name="gt_msg_type"       type="string"   value="$(arg gt_msg_type)" />
+
+            <param name="orb_pose_topic"    type="string"   value="$(arg orb_pose_topic)" />
+            <param name="orb_msg_type"      type="string"   value="$(arg orb_msg_type)" />
+            
+            <param name="tartan_pose_topic" type="string"   value="$(arg tartan_pose_topic)" />
+            <param name="tartan_msg_type"   type="string"   value="$(arg tartan_msg_type)" />
+            
+            <param name="db_format"     type="string"   value="$(arg db_format)" />
+            <param name="file_dir"      type="string"   value="$(arg file_dir)" />
+    </node>
+
+
+</launch>

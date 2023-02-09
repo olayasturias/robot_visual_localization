@@ -45,7 +45,8 @@ include_directories(
 ## Mark executable scripts (Python etc.) for installation
 ## in contrast to setup.py, you can choose the destination
 catkin_install_python(PROGRAMS
-  scripts/read_save_pose.py
+  scripts/read_save_single_pose.py
+  scripts/read_save_all_poses.py
   DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
 )
 install(DIRECTORY config launch

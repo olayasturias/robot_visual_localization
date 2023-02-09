@@ -2,10 +2,16 @@
 
     <arg name="pose_topic" default="/tartanvo/camera_pose"/>
     <arg name="msg_type" default="PoseStamped"/>
+    <arg name="db_format" default="tum-rgbd"/>
+    <arg name="file_dir" default="$(find vo_all_at_once)/saved"/>
+    <arg name="file_name" default="tartan.txt"/>
 
-    <node name="read_save_pose_tartan" pkg="vo_all_at_once" type="read_save_pose.py"  respawn="false" output="screen">
+    <node name="read_save_pose_tartan" pkg="vo_all_at_once" type="read_save_single_pose.py"  respawn="false" output="screen">
             <param name="pose_topic"      type="string"   value="$(arg pose_topic)" />
             <param name="msg_type"      type="string"   value="$(arg msg_type)" />
+            <param name="db_format"      type="string"   value="$(arg db_format)" />
+            <param name="file_dir"      type="string"   value="$(arg file_dir)" />
+            <param name="file_name"      type="string"   value="$(arg file_name)" />
     </node>
 
 
