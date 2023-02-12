@@ -121,14 +121,24 @@ class Pose_msg_to_file():
         f.write("}")
         f.close()
 
-        self.create_evo_plot(trajectory_dict, outfile+'.svg')
+        self.create_evo_plot(trajectory_dict, outfile)
 
         
 
     def create_evo_plot(self,trajectory_dict,file):
         fig = plt.figure()
         plot.trajectories(fig, trajectory_dict, plot.PlotMode.xyz)
-        plt.savefig(file)
+        plt.savefig(file+'_xyz'+'.svg')
+        plot.trajectories(fig, trajectory_dict, plot.PlotMode.xz)
+        plt.savefig(file+'_xz'+'.svg')
+        plot.trajectories(fig, trajectory_dict, plot.PlotMode.yx)
+        plt.savefig(file+'_yx'+'.svg')
+        plot.trajectories(fig, trajectory_dict, plot.PlotMode.yz)
+        plt.savefig(file+'_yz'+'.svg')
+        plot.trajectories(fig, trajectory_dict, plot.PlotMode.zx)
+        plt.savefig(file+'_xz'+'.svg')
+        plot.trajectories(fig, trajectory_dict, plot.PlotMode.zy)
+        plt.savefig(file+'_zy'+'.svg')
 
     def create_evo_dict(self, algorithm_name, gt, estimate):
         result_dict = {}
