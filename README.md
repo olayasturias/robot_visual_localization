@@ -1,6 +1,9 @@
 # robot_visual_localization
 ROS packages for robot camera-based localization
 
+
+![](https://raw.githubusercontent.com/olayasturias/robot_visual_localization/ros1/media/diagram.png?token=GHSAT0AAAAAAB5OL65OODOZX7K7ZTNRBOQKY7TM2ZA)
+
 <!-- ## Index
 * [Monocular SLAM](#Monocular (RGB)) -->
 
