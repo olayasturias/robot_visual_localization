@@ -4,9 +4,16 @@ ROS packages for robot camera-based localization
 
 ![](https://raw.githubusercontent.com/olayasturias/robot_visual_localization/ros1/media/diagram.png?token=GHSAT0AAAAAAB5OL65OODOZX7K7ZTNRBOQKY7TM2ZA)
 
-<!-- ## Index
-* [Monocular SLAM](#Monocular (RGB)) -->
+Clone this repository with its submodules:
 
+```bash
+git clone --recurse-submodules -j8 https://github.com/olayasturias/robot_visual_localization.git
+```
+If you forgot to clone the submodules, you can download them afterwards as
+
+```bash
+git submodule update --init --recursive
+```
 
 - [DSO](https://github.com/JakobEngel/dso_ros)
 >Direct Sparse Odometry, J. Engel, V. Koltun, D. Cremers, In arXiv:1607.02565, 2016
@@ -36,3 +43,8 @@ replace cam1_R_cam2.quaternion()[0]) with cam1_R_cam2.Quaternion()[0]) -->
 
 - [TartanVO](https://github.com/castacks/tartanvo)
 > Wang W, Hu Y, Scherer S. Tartanvo: A generalizable learning-based vo. InConference on Robot Learning 2021 Oct 4 (pp. 1761-1772). PMLR.
+
+From your ros workspace directory:
+```bash
+mkdir -p src/robot_visual_localization/tartan_vo_ros/models && wget https://cmu.box.com/shared/static/t1a5u4x6dxohl89104dyrsiz42mvq2sz.pkl -O src/robot_visual_localization/tartan_vo_ros/models/1914.pkl
+```

@@ -2,6 +2,7 @@
 
     <arg name="cam_topic" default="/cam0/image_raw"/>
     <arg name="tartanvo_model_path" default="$(find tartan_vo_ros)/models/1914.pkl"/>
+    <arg name="use_compressed_img" default="False"/>
     <arg name="world_frame_id" default="world_tartan"/>
     <arg name="cam_frame_id" default="camera_tartan"/>
 
@@ -17,6 +18,7 @@
             <!-- Parameters for tartanvo model -->
             <param name="tartanvo_model_path" type="string"   value="$(arg tartanvo_model_path)" />
             <!-- camera related params -->
+            <param name="use_compressed_img"    type="string"   value="$(arg use_compressed_img)" />
             <param name="cam_topic"    type="string"   value="$(arg cam_topic)" />
             <param name="focal_x"      type="double"   value="$(arg focal_x)" />
             <param name="focal_y"      type="double"   value="$(arg focal_y)" />

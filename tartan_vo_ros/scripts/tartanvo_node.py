@@ -35,7 +35,7 @@ import cv2
 import numpy as np
 import tf2_ros
 import rospy
-from sensor_msgs.msg import Image, CameraInfo
+from sensor_msgs.msg import Image, CompressedImage, CameraInfo
 from geometry_msgs.msg import PoseStamped, TransformStamped
 from nav_msgs.msg import Odometry
 from std_msgs.msg import Float32
@@ -57,6 +57,8 @@ class TartanVONode(object):
         fy = rospy.get_param('~focal_y')
         ox = rospy.get_param('~center_x')
         oy = rospy.get_param('~center_y')
+        self.use_compressed_img = rospy.get_param('~use_compressed_img', False)
+
         self.cam_intrinsics = [w, h, fx, fy, ox, oy]
 
         self.cv_bridge = CvBridge()
@@ -67,7 +69,11 @@ class TartanVONode(object):
         self.tf2_broadcaster = tf2_ros.TransformBroadcaster()
         self.pose_pub = rospy.Publisher("tartanvo/camera_pose", PoseStamped, queue_size=10)
         self.odom_pub = rospy.Publisher("tartanvo/camera_odom", Odometry, queue_size=10)
-        rospy.Subscriber(cam_topic, Image, self.handle_img)
+        if "compressed" in cam_topic:
+            rospy.Subscriber(cam_topic, CompressedImage, self.handle_img)
+        else:
+            rospy.Subscriber(cam_topic, Image, self.handle_img)
+
         rospy.Subscriber('cam_info', CameraInfo, self.handle_caminfo)
         rospy.Subscriber('vo_scale', Float32, self.handle_scale)
 
@@ -94,7 +100,12 @@ class TartanVONode(object):
 
     def handle_img(self, msg):
         starttime = time.time()
-        image_np = self.cv_bridge.imgmsg_to_cv2(msg, "bgr8")
+        if self.use_compressed_img:
+            # Convert compressed image to OpenCV format
+            np_arr = np.fromstring(msg.data, np.uint8)
+            image_np = cv2.imdecode(np_arr, cv2.IMREAD_COLOR)
+        else:
+            image_np = self.cv_bridge.imgmsg_to_cv2(msg, "bgr8")
 
         if image_np.shape[0] != self.intrinsic.shape[0] or image_np.shape[1] != self.intrinsic.shape[1]:
             print('The intrinsic parameter does not match the image parameter!')

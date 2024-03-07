@@ -1,0 +1,21 @@
+<launch>
+
+    <arg name="cam_topic" default="/uuv02/vertical_camera/image_raw/compressed"/>
+    <arg name="tartanvo_model_path" default="$(find tartan_vo_ros)/models/1914.pkl"/>
+    <arg name="use_compressed_img" default="True"/>
+    <arg name="world_frame_id" default="world_tartan"/>
+    <arg name="cam_frame_id" default="camera_tartan"/>
+
+    <arg name="image_width" default="1280"/>
+    <arg name="image_height" default="800"/>
+    <arg name="focal_x" default="726.96902"/>
+    <arg name="focal_y" default="757.87068"/>
+    <arg name="center_x" default="648.87323"/>
+    <arg name="center_y" default="405.71681"/>
+
+    <include file="$(find tartan_vo_ros)/launch/tartanvo.launch" pass_all_args="true"/>
+
+    <!-- Visualization - RViz-->
+    <node name="rviz" pkg="rviz" type="rviz" args="-d $(find tartan_vo_ros)/config/uwrs.rviz" output="screen" />
+
+</launch>
